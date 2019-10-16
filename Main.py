@@ -5,7 +5,7 @@ import math
 import random
 
 
-seed = OpenSimplex(random.randint(0,1000))                        # object used to generate noise
+seed = OpenSimplex(random.randint(0, 1000))     # object used to generate noise
 w, h = 400, 300                                 # dimensions of the map
 f = 0.03                                        # base frequency. scales frequency of all octaves
 hvar = 5.0                                      # height variance. used to alter height values to a more desirable level
@@ -18,8 +18,8 @@ def simplex(x, y):                          # simplex algorithm used to create n
     return (seed.noise2d(x, y) + 1)/2
 
 
-def adjustment_function(num, pow):          # adjusts heights of elevation map
-    return math.pow(num, pow)
+def adjustment_function(num, pow):          # adjusts heights of elevation map to make stronger contrasts
+    return math.pow(num, pow)               # currently just original raised to a power
 
 
 class Octave:
@@ -85,7 +85,7 @@ print("\nmax elevation C: " + str(maxC) + "\nmin elevation C: " + str(minC))
 print("\nmax elevation: " + str(max) + "\nmin elevation: " + str(min))
 
 
-water_level = 10                                                          # create image
+water_level = 10                                                          # height map color key
 beach_max = 20
 plain_max = 200
 mtn_max = 253
@@ -96,10 +96,10 @@ plain = (0, 153, 0)
 mountain = (128, 128, 128)
 snow = (255, 255, 255)
 
-for y in range(h):
+for y in range(h):                  # assign color values
     for x in range(w):
         num = elevation[y][x]
-        if num > 255:
+        if num > 255:               # currently cuts off at max value. consider scaling values to fit range 0-255
             num = 255
         if num < water_level:
             elevation[y][x] = water
