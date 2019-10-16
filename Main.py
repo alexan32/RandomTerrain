@@ -10,8 +10,8 @@ w, h = 400, 300                                 # dimensions of the map
 f = 0.03                                        # base frequency. scales frequency of all octaves
 hvar = 5.0                                      # height variance. used to alter height values to a more desirable level
 elevation = [[0 for x in range(w)] for y in range(h)]
-max, maxA, maxB, maxC = -999.0, -999.0, -999.0, -999.0
-min, minA, minB, minC = 999.0, 999.0, 999.0, 999.0
+maxE, maxA, maxB, maxC = -999.0, -999.0, -999.0, -999.0
+minE, minA, minB, minC = 999.0, 999.0, 999.0, 999.0
 
 
 def simplex(x, y):                          # simplex algorithm used to create noise for height map
@@ -73,16 +73,16 @@ for y in range(h):                                                          # ad
     for x in range(w):
         num = adjustment_function((arr_1[y][x] + arr_2[y][x] + arr_3[y][x]), hvar)
         num = (int)(num * 255)
-        if num > max:
-            max = num
-        if num < min:
-            min = num
+        if num > maxE:
+            maxE = num
+        if num < minE:
+            minE = num
         elevation[y][x] = num
 
 print("\nmax elevation A: " + str(maxA) + "\nmin elevation A: " + str(minA))
 print("\nmax elevation B: " + str(maxB) + "\nmin elevation B: " + str(minB))
 print("\nmax elevation C: " + str(maxC) + "\nmin elevation C: " + str(minC))
-print("\nmax elevation: " + str(max) + "\nmin elevation: " + str(min))
+print("\nmax elevation: " + str(maxE) + "\nmin elevation: " + str(minE))
 
 
 water_level = 10                                                          # height map color key
